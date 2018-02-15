@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: HelloGoWebApp SAM project
+
+# Parameters:
+#   ProjectId:
+#     Type: String
+#     Description: AWS CodeStar projectID used to associate new resources to team members
+
+Resources:
+  APIGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: post
+
+  # Api:
+  #   Type: AWS::ApiGateway::RestApi
+  #   Properties:
+  #     Name: MyAPI
+  #     DefinitionUri: swagger.yaml
+  #     StageName: Prod
+  #     Variables:
+  #         LambdaFunctionName: !Ref LambdaFunction
