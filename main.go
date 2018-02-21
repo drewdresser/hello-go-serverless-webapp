@@ -2,10 +2,16 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+)
+
+var (
+	// ErrNameNotProvided is thrown when a name is not provided
+	ErrNameNotProvided = errors.New("no name was provided in the HTTP body")
 )
 
 func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
@@ -22,7 +28,7 @@ func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 		return events.APIGatewayProxyResponse{Body: "POST", StatusCode: 200}, nil
 	} else {
 		fmt.Printf("NEITHER\n")
-		return events.APIGatewayProxyResponse{Body: "NEITHER", StatusCode: 200}, nil
+		return events.APIGatewayProxyResponse{}, ErrNameNotProvided
 	}
 }
 
